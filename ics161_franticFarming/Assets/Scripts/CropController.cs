@@ -6,47 +6,62 @@ public class CropController : MonoBehaviour
 {
 
     private SpriteRenderer currentCropStatusSpriteRenderer;
-    [SerializeField] private Sprite[] seededGroundSprites;
-    private bool isGrown;
-    private bool isPlanted;
 
-    int time = 0;
+    [SerializeField] private Sprite noCropSprite;
+    [SerializeField] private Sprite[] plantedCropSprites;
+    [SerializeField] private Sprite matureCropSprite;
+
+    private bool isPlanted;
+    private bool isAlive;
+
+    public int Maturity { get; private set; }
+    public int Fertilization;
+
+    [SerializeField] private int cropMaturityLevel = 20; // Number to indicate when a crop is fully mature
+
+    [SerializeField] private int maturityIncreaseRate = 2 ;  // Normal rate for crop maturity growth when water = 0
+    [SerializeField] private int fertilizedIncreaseRate = 1; // Added rate when crop has > 0 Fertilization
+    [SerializeField] private int fertilizedDecreaseRate = 1; // Decreases mautirity growth when Fertilization = 0
+
+    [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
 
     void Awake()
     {
         currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
         isPlanted = false;
-        isGrown = false;
+        isAlive = false;
+        Maturity = 0;
+        Fertilization = 0;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
+        currentCropStatusSpriteRenderer.sprite = noCropSprite;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        time++;
-        if (time == 60)
-        {
-            plantCrop();
-            time = 0;
-        }
+
     }
 
     /// <summary>
-    /// Call this function when the player wants to plant seeds on the crop tile.
-    /// If a seed has already been planted, or if a crop exists, nothing will happen.
+    /// Call this function when the player plants the crop. It also starts the UpdateCropStatus Coroutine
+    /// which updates it's maturity.
     /// </summary>
     public void plantCrop()
     {
-        if (!isPlanted && !isGrown)
+        if (!isPlanted)
         {
+            Debug.Log("PLANTING from plantCrop()");
             isPlanted = true;
-            int randomSprite = Random.Range(0, seededGroundSprites.Length);
-            currentCropStatusSpriteRenderer.sprite = seededGroundSprites[randomSprite];
+            isAlive = true;
+            int randomSprite = Random.Range(0, plantedCropSprites.Length);
+            currentCropStatusSpriteRenderer.sprite = plantedCropSprites[randomSprite];
+            StartCoroutine(UpdateCropStatus());
         }
     }
 
@@ -58,39 +73,40 @@ public class CropController : MonoBehaviour
 
     }
 
-    private void addWater()
-    {
 
-    }
+
 
     /// <summary>
-    /// This function needs to be called when the crop will grow from seed to crop.
-    /// It can only be called once. If crop has already grown from seed to crop, nothing will happen
+    /// Updates maturity depending on it's fertilization and murity rates
     /// </summary>
-    public void cropGrow()
+    private void maturityIncrease()
     {
-
+        if (Fertilization > 0)
+        {
+            Maturity += maturityIncreaseRate + fertilizedIncreaseRate;
+        }
+        else
+        {
+            Maturity += maturityIncreaseRate - fertilizedDecreaseRate;
+        }
+        Debug.LogFormat("Current Maturity: {0}", Maturity);
+        if (Maturity >= cropMaturityLevel)
+        {
+            Debug.Log("MATURING!");
+            changeCropToMature();
+        }
     }
+
+    private void changeCropToMature()
+    {
+        currentCropStatusSpriteRenderer.sprite = matureCropSprite;
+    }
+
 
     /// <summary>
-    /// Dimishes health as needed and updates the crop sprites if necessary
+    /// Decrease Fertilization
     /// </summary>
-    private void dropHealth()
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// Diminishes 
-    /// </summary>
-    private void dropWater()
-    {
-
-    }
-
-
-    private void dropFertilizer()
+    private void decreaseFertilization()
     {
 
     }
@@ -100,10 +116,28 @@ public class CropController : MonoBehaviour
     /// </summary>
     void OnMouseDown()
     {
-        Debug.Log("LEFT CLICK");
         if(!isPlanted)
         {
+            Debug.Log("PLANTING CROP");
             plantCrop();
+        }
+    }
+
+
+    /// <summary>
+    /// Coroutine that updates the crop status every second.
+    /// </summary>
+    IEnumerator UpdateCropStatus()
+    {
+        Debug.Log("STARTING UPDATE CROP STATUS");
+        for(; ; )
+        {
+            if (!isAlive)
+            {
+                break;
+            }
+            maturityIncrease();
+            yield return new WaitForSeconds(updateCropSeconds);
         }
     }
 
