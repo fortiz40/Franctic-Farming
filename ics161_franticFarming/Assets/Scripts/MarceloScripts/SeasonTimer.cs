@@ -5,7 +5,7 @@ using TMPro;
 
 public enum Season
 {
-    winter, spring, summer, fall
+    fall, winter, spring, summer
 }
 
 public class SeasonTimer : MonoBehaviour
@@ -21,7 +21,7 @@ public class SeasonTimer : MonoBehaviour
     void Awake()
     {
         time = 0;
-        currentSeason = Season.winter;
+        currentSeason = Season.fall;
     }
 
     void Start()
@@ -42,16 +42,16 @@ public class SeasonTimer : MonoBehaviour
         switch (elapsedSeasons % 4)
         {
             case 0:
-                currentSeason = Season.winter;
+                currentSeason = Season.fall;
                 break;
             case 1:
-                currentSeason = Season.spring;
+                currentSeason = Season.winter;
                 break;
             case 2:
-                currentSeason = Season.summer;
+                currentSeason = Season.spring;
                 break;
             case 3:
-                currentSeason = Season.fall;
+                currentSeason = Season.summer;
                 break;
             default:
                 throw new System.Exception("No condition set for currentSeason = " + (elapsedSeasons % 4));
