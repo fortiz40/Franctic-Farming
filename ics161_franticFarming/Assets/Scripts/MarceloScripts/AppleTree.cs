@@ -38,6 +38,8 @@ public class AppleTree : MonoBehaviour
     void Start()
     {
         UpdateVisuals();
+
+        //seasonTimer.m_SeasonChange.AddListener(SayHi);                  // Test Listener to react when the season is changed
     }
 
     void Update()
@@ -161,6 +163,11 @@ public class AppleTree : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void SayHi(Season newSeason)
+    {
+        Debug.Log("Hi! I'm now in the " + newSeason + " season!");
     }
 
     // Public functions
