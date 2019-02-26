@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public enum Season
@@ -8,18 +9,26 @@ public enum Season
     fall, winter, spring, summer
 }
 
+[System.Serializable]
+public class SeasonEvent : UnityEvent<Season> { }
+
 public class SeasonTimer : MonoBehaviour
 {
-    public int secondsPerSeason = 15;
+    [System.NonSerialized]
+    public SeasonEvent m_SeasonChange;
+
+    [SerializeField]
+    private int secondsPerSeason = 15;
 
     private int time;
     private Season currentSeason;
-
+    
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI seasonText;
 
     void Awake()
     {
+        m_SeasonChange = new SeasonEvent();
         time = 0;
         currentSeason = Season.fall;
     }
@@ -42,15 +51,27 @@ public class SeasonTimer : MonoBehaviour
         switch (elapsedSeasons % 4)
         {
             case 0:
+                if (currentSeason != Season.fall)
+                    m_SeasonChange.Invoke(Season.fall);
+
                 currentSeason = Season.fall;
                 break;
             case 1:
+                if (currentSeason != Season.winter)
+                    m_SeasonChange.Invoke(Season.winter);
+
                 currentSeason = Season.winter;
                 break;
             case 2:
+                if (currentSeason != Season.spring)
+                    m_SeasonChange.Invoke(Season.spring);
+
                 currentSeason = Season.spring;
                 break;
             case 3:
+                if (currentSeason != Season.summer)
+                    m_SeasonChange.Invoke(Season.summer);
+
                 currentSeason = Season.summer;
                 break;
             default:
