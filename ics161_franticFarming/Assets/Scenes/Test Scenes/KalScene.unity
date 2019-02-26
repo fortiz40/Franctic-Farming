@@ -627,9 +627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a174b87bcc6e89145b4ce5958f1b695a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Season: {fileID: 0}
   HungerBar: {fileID: 202373816}
   FoodBar: {fileID: 958617536}
-  HurtCircle: 6
+  HurtCircle: 1
   MaxHunger: 100
   InitialFood: 0
 --- !u!50 &1073853641
@@ -652,7 +653,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1073853642
 BoxCollider2D:
   m_ObjectHideFlags: 0

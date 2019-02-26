@@ -55,13 +55,13 @@ public class Player : MonoBehaviour
         Vector2 player_movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (player_movement != Vector2.zero)
         {
-            m_animator.SetBool("Walking", true);
+            m_animator.SetBool("walking", true);
             m_animator.SetFloat("input_x", player_movement.x);
             m_animator.SetFloat("input_y", player_movement.y);
         }
         else
         {
-            m_animator.SetBool("Walking", false);
+            m_animator.SetBool("walking", false);
         }
         m_rigidbody.MovePosition(m_rigidbody.position + player_movement * Time.deltaTime * move_speed);
     }
@@ -90,6 +90,19 @@ public class Player : MonoBehaviour
         HungerBar.value = hunger;
     }
     
+    public void addFood(float apple)
+    {
+        food += apple;
+        if (food > 100)
+        {
+            FoodBar.value = 100;
+        }
+        else
+        {
+            FoodBar.value = food;
+        }
+        
+    }
     void die()
     {
         Debug.Log("You Die!!!");
