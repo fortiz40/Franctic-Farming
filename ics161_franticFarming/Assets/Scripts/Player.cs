@@ -104,6 +104,23 @@ public class Player : MonoBehaviour
         
     }
 
+    public float RemoveFood(float desired)
+    {
+        if (desired > food)
+        {
+            desired = food;
+            food = 0;
+            FoodBar.value = 0;
+        }
+        else
+        {
+            food -= desired;
+            FoodBar.value = food;
+        }
+
+        return desired;
+    }
+
     void UpdateSeason(Season season)
     {
         if (season == Season.winter)

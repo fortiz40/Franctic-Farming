@@ -21,6 +21,7 @@ public class AppleTree : MonoBehaviour
     private float ripeness;
 
     private SpriteRenderer spriteRenderer;
+    private Collider2D collider;
     private List<GameObject> appleStages;
 
     private SeasonTimer seasonTimer;
@@ -31,6 +32,7 @@ public class AppleTree : MonoBehaviour
         ripeness = 0f;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        collider = GetComponent<Collider2D>();
         appleStages = GetAllChildren(gameObject);
 
         seasonTimer = FindObjectOfType<SeasonTimer>();
@@ -47,7 +49,7 @@ public class AppleTree : MonoBehaviour
     void Update()
     {
         // While the tree is being clicked on, decrement ripeness from the tree and STOP incrementing
-        if (OnMouse())
+        if (OnMouse(true))
         {
             player.addFood(GetFood());
         }
@@ -152,7 +154,7 @@ public class AppleTree : MonoBehaviour
             ripeness = 100f;
     }
 
-    private bool OnMouse()
+    private bool OnMouse(bool includeClickDistance)
     {
         // Check for Left Mouse Button
         if (Input.GetMouseButton(0))
@@ -162,7 +164,22 @@ public class AppleTree : MonoBehaviour
 
             // Check if the tree's collider is clicked on
             if (hit.collider != null && hit.collider.gameObject == gameObject)
-                return true;
+            {
+                switch (includeClickDistance)
+                {
+                    case false:
+                        // Merely return true
+                        return true;
+                    case true:
+                        // Check if the player collider is within the distance specified in ClickSettings
+                        float distance = collider.Distance(player.GetComponent<Collider2D>()).distance;
+                        Debug.LogFormat("Distance between Tree -> Player: {0}", distance);
+
+                        if (distance <= ClickSettings.instance.GetMaxClickDistance())
+                            return true;
+                        break;
+                }
+            }
         }
         return false;
     }
