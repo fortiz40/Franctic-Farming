@@ -14,6 +14,8 @@ public class SeasonEvent : UnityEvent<Season> { }
 
 public class SeasonTimer : MonoBehaviour
 {
+    public static SeasonTimer instance;
+
     [System.NonSerialized]
     public SeasonEvent m_SeasonChange;
 
@@ -28,6 +30,7 @@ public class SeasonTimer : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         m_SeasonChange = new SeasonEvent();
         time = 0;
         currentSeason = Season.fall;

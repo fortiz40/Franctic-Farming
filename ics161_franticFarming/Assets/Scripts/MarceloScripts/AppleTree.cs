@@ -24,6 +24,7 @@ public class AppleTree : MonoBehaviour
     private List<GameObject> appleStages;
 
     private SeasonTimer seasonTimer;
+    private Player player;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class AppleTree : MonoBehaviour
         appleStages = GetAllChildren(gameObject);
 
         seasonTimer = FindObjectOfType<SeasonTimer>();
+        player = FindObjectOfType<Player>();
     }
 
     void Start()
@@ -47,7 +49,7 @@ public class AppleTree : MonoBehaviour
         // While the tree is being clicked on, decrement ripeness from the tree and STOP incrementing
         if (OnMouse())
         {
-            GetFood();
+            player.addFood(GetFood());
         }
 
         // Else, just continue incrementing ripeness to the tree
