@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CropController : MonoBehaviour
 {
-
-    private SeasonTimer m_seasonTimer;
-
+    
     private SpriteRenderer currentCropStatusSpriteRenderer;
 
     [SerializeField] private Sprite noCropSprite;
@@ -44,9 +42,8 @@ public class CropController : MonoBehaviour
     void Start()
     {
         currentCropStatusSpriteRenderer.sprite = noCropSprite;
-        m_seasonTimer = GameObject.FindObjectOfType<SeasonTimer>();
-        m_seasonTimer.m_SeasonChange.AddListener(OnSeasonChangeListener);
-        currentSeason = m_seasonTimer.GetCurrentSeason();
+        SeasonTimer.instance.m_SeasonChange.AddListener(OnSeasonChangeListener);
+        currentSeason = SeasonTimer.instance.GetCurrentSeason();
     }
 
     // Update is called once per frame
