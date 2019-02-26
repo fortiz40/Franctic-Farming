@@ -5,6 +5,8 @@ using UnityEngine;
 public class CropController : MonoBehaviour
 {
 
+    private SeasonTimer m_seasonTimer;
+
     private SpriteRenderer currentCropStatusSpriteRenderer;
 
     [SerializeField] private Sprite noCropSprite;
@@ -13,15 +15,18 @@ public class CropController : MonoBehaviour
 
     private bool isPlanted;
     private bool isAlive;
+    private Season currentSeason;
 
-    public int Maturity { get; private set; }
-    public int Fertilization;
+    public int Maturity { get; private set; } = 0;
+    public int Fertilization = 0;
 
     [SerializeField] private int cropMaturityLevel = 20; // Number to indicate when a crop is fully mature
 
     [SerializeField] private int maturityIncreaseRate = 2 ;  // Normal rate for crop maturity growth when water = 0
     [SerializeField] private int fertilizedIncreaseRate = 1; // Added rate when crop has > 0 Fertilization
     [SerializeField] private int fertilizedDecreaseRate = 1; // Decreases mautirity growth when Fertilization = 0
+    [SerializeField] private int baseFertilizerAddAmount = 50; //Amount to increase Fertilization when crop is clicked
+    [SerializeField] private int dropFertilizationRate = 1; // Amount to drop fertilization by each second
 
     [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
 
@@ -39,7 +44,9 @@ public class CropController : MonoBehaviour
     void Start()
     {
         currentCropStatusSpriteRenderer.sprite = noCropSprite;
-
+        m_seasonTimer = GameObject.FindObjectOfType<SeasonTimer>();
+        m_seasonTimer.m_SeasonChange.AddListener(OnSeasonChangeListener);
+        currentSeason = m_seasonTimer.GetCurrentSeason();
     }
 
     // Update is called once per frame
@@ -54,7 +61,7 @@ public class CropController : MonoBehaviour
     /// </summary>
     public void plantCrop()
     {
-        if (!isPlanted)
+        if (!isPlanted && currentSeason == Season.fall)
         {
             Debug.Log("PLANTING from plantCrop()");
             isPlanted = true;
@@ -70,10 +77,13 @@ public class CropController : MonoBehaviour
     /// </summary>
     public void addFertilizer()
     {
-
+        Fertilization += baseFertilizerAddAmount;
     }
 
+    public void harvestCrop()
+    {
 
+    }
 
 
     /// <summary>
@@ -108,7 +118,10 @@ public class CropController : MonoBehaviour
     /// </summary>
     private void decreaseFertilization()
     {
-
+        if (Fertilization > 0)
+        {
+            Fertilization -= dropFertilizationRate;
+        }
     }
 
     /// <summary>
@@ -116,11 +129,24 @@ public class CropController : MonoBehaviour
     /// </summary>
     void OnMouseDown()
     {
-        if(!isPlanted)
+        if(!isPlanted && currentSeason == Season.fall)
         {
             Debug.Log("PLANTING CROP");
             plantCrop();
         }
+        else if(isPlanted && isAlive && (currentSeason == Season.winter || currentSeason == Season.spring))
+        {
+            addFertilizer();
+        }
+        else if(isPlanted && isAlive && currentSeason == Season.summer)
+        {
+            harvestCrop();
+        }
+    }
+
+    private void OnSeasonChangeListener(Season season)
+    {
+        currentSeason = season;
     }
 
 
@@ -137,6 +163,7 @@ public class CropController : MonoBehaviour
                 break;
             }
             maturityIncrease();
+            decreaseFertilization();
             yield return new WaitForSeconds(updateCropSeconds);
         }
     }
