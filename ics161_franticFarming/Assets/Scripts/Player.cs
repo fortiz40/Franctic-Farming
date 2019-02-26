@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public SeasonTimer Season;
+    public Season Season;
     public Slider HungerBar;
     public Slider FoodBar;
     private float timer = 0;
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         SetBars();
         Move();
         timer += Time.deltaTime;
-        //Season.m_SeasonChange.AddListener();
+        SeasonTimer.instance.m_SeasonChange.AddListener(UpdateSeason);
         if (timer >= HurtCircle)
         {
             Hurt();
@@ -102,6 +102,18 @@ public class Player : MonoBehaviour
             FoodBar.value = food;
         }
         
+    }
+
+    void UpdateSeason(Season season)
+    {
+        if (season == Season.winter)
+        {
+            hurt = 2;
+        }
+        else
+        {
+            hurt = 1;
+        }
     }
     void die()
     {
