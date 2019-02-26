@@ -4,15 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
-{   
+{
+    public SeasonTimer Season;
     public Slider HungerBar;
     public Slider FoodBar;
     private float timer = 0;
     public int HurtCircle = 6;
     public int MaxHunger = 100;
     public int InitialFood = 0;
-    private int hunger;
-    private int food;
+    private float hunger;
+    private float food;
+    private float hurt;
     private float move_speed;
     Rigidbody2D m_rigidbody;
     Animator m_animator;
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
         food = InitialFood;
         HungerBar.value = hunger;
         FoodBar.value = food;
+        hurt = 1;
     }
 
     // Update is called once per frame
@@ -35,14 +38,16 @@ public class Player : MonoBehaviour
         SetBars();
         Move();
         timer += Time.deltaTime;
+        //Season.m_SeasonChange.AddListener();
         if (timer >= HurtCircle)
         {
             Hurt();
             timer = 0;
         }
-        
-        
-
+        if ( hunger <= 0)
+        {
+            die();
+        }
     }
 
     void Move()
@@ -69,19 +74,25 @@ public class Player : MonoBehaviour
 
     }
 
-    public int getHunger()
+    public float getHunger()
     {
         return hunger;
     }
 
-    public int getFood()
+    public float getFood()
     {
         return food;
     }
 
     void Hurt()
     {
-        hunger -= 1;
+        hunger -= hurt;
         HungerBar.value = hunger;
     }
+    
+    void die()
+    {
+        Debug.Log("You Die!!!");
+    }
+    
 }
