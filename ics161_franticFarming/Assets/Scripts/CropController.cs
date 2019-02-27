@@ -81,15 +81,14 @@ public class CropController : MonoBehaviour
     /// </summary>
     public void addFertilizer()
     {
-        Debug.LogFormat("ADDING {0.0f} FERTILIZER AND REMOVING FROM PLAYER", baseFertilizerAddAmount);
-        Fertilization += baseFertilizerAddAmount;
-        player.RemoveFood(baseFertilizerAddAmount);
+        //Debug.LogFormat("ADDING {0.0f} FERTILIZER AND REMOVING FROM PLAYER", baseFertilizerAddAmount);
+        Fertilization += player.RemoveFood(baseFertilizerAddAmount);
     }
 
     public void harvestCrop()
     {
-        Debug.Log("HARVESTING!");
-        Debug.LogFormat("CURRENT MATURIRY: {0}", Maturity);
+        //Debug.Log("HARVESTING!");
+        //Debug.LogFormat("CURRENT MATURIRY: {0}", Maturity);
         ScoreCounter.instance.Score += Maturity;
         resetCrop();
     }
@@ -125,7 +124,7 @@ public class CropController : MonoBehaviour
         //Debug.LogFormat("Current Maturity: {0}", Maturity);
         if (Maturity >= cropMaturityLevel && !isMature)
         {
-            Debug.Log("MATURING!");
+            //Debug.Log("MATURING!");
             changeCropToMature();
         }
     }
@@ -155,12 +154,12 @@ public class CropController : MonoBehaviour
     {
         if(!isPlanted && currentSeason == Season.fall)
         {
-            Debug.Log("PLANTING CROP");
+            //Debug.Log("PLANTING CROP");
             plantCrop();
         }
         else if(isPlanted && isAlive && (currentSeason == Season.winter || currentSeason == Season.spring))
         {
-            Debug.Log("ADDING FERTILIZER");
+            //Debug.Log("ADDING FERTILIZER");
             addFertilizer();
         }
         else if(isPlanted && isAlive && currentSeason == Season.summer)

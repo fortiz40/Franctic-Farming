@@ -11,6 +11,10 @@ public class ScoreCounter : MonoBehaviour
     // Variables
     [SerializeField]
     private int goal = 300;
+    [SerializeField]
+    private GameObject gameOverScreen = null;
+    [SerializeField]
+    private TextMeshProUGUI explaination = null;
 
     public int Score { get; set; }
     public TextMeshProUGUI scoreText = null;
@@ -51,6 +55,8 @@ public class ScoreCounter : MonoBehaviour
             else
             {
                 // DO NOT wipe score, but show Game Over screen here...
+                gameOverScreen.SetActive(true);
+                explaination.text = "You didn't earn enough point for the year!\n(Score = " + Score + ")";
             }
         }
     }

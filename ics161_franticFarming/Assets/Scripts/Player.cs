@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class Player : MonoBehaviour
     private float move_speed;
     Rigidbody2D m_rigidbody;
     Animator m_animator;
+
+    [SerializeField]
+    private GameObject gameOverScreen = null;
+    [SerializeField]
+    private TextMeshProUGUI explaination = null;
     
     // Start is called before the first frame update
     void Start()
@@ -137,6 +143,10 @@ public class Player : MonoBehaviour
     void die()
     {
         Debug.Log("You Die!!!");
+
+        //Time.timeScale = 0f;
+        gameOverScreen.SetActive(true);
+        explaination.text = "You have starved to death!\n(Score = " + ScoreCounter.instance.Score + ")";
     }
     
 }
