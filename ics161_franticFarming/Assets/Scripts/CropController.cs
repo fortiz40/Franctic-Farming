@@ -29,6 +29,7 @@ public class CropController : MonoBehaviour
     [SerializeField] private int dropFertilizationRate = 1; // Amount to drop fertilization by each second
     [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
 
+    private Player player;
     void Awake()
     {
         currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
@@ -48,6 +49,8 @@ public class CropController : MonoBehaviour
         currentCropStatusSpriteRenderer.sprite = noCropSprite;
         SeasonTimer.instance.m_SeasonChange.AddListener(OnSeasonChangeListener);
         currentSeason = SeasonTimer.instance.GetCurrentSeason();
+
+        player = GameObject.FindObjectOfType<Player>().GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -78,7 +81,9 @@ public class CropController : MonoBehaviour
     /// </summary>
     public void addFertilizer()
     {
+        Debug.LogFormat("ADDING {0.0f} FERTILIZER AND REMOVING FROM PLAYER", baseFertilizerAddAmount);
         Fertilization += baseFertilizerAddAmount;
+        player.RemoveFood(baseFertilizerAddAmount);
     }
 
     public void harvestCrop()
@@ -155,6 +160,7 @@ public class CropController : MonoBehaviour
         }
         else if(isPlanted && isAlive && (currentSeason == Season.winter || currentSeason == Season.spring))
         {
+            Debug.Log("ADDING FERTILIZER");
             addFertilizer();
         }
         else if(isPlanted && isAlive && currentSeason == Season.summer)
