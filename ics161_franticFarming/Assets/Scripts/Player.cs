@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
         HungerBar.value = hunger;
         FoodBar.value = food;
         hurt = 1;
+
+        SeasonTimer.instance.m_SeasonChange.AddListener(UpdateSeason);
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class Player : MonoBehaviour
         SetBars();
         Move();
         timer += Time.deltaTime;
-        SeasonTimer.instance.m_SeasonChange.AddListener(UpdateSeason);
+        
         if (timer >= HurtCircle)
         {
             Hurt();
