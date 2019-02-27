@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         food = InitialFood;
         HungerBar.value = hunger;
         FoodBar.value = food;
-        hurt = 1;
+        hurt = 5;
 
         SeasonTimer.instance.m_SeasonChange.AddListener(UpdateSeason);
     }
@@ -55,6 +55,19 @@ public class Player : MonoBehaviour
         if ( hunger <= 0)
         {
             die();
+        }
+
+        // Eat
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            hunger += RemoveFood(10);
+
+            if (hunger > 100)
+            {
+                hunger = 100;
+            }
+
+            HungerBar.value = hunger;
         }
     }
 
@@ -133,11 +146,11 @@ public class Player : MonoBehaviour
     {
         if (season == Season.winter)
         {
-            hurt = 2;
+            hurt = 10;
         }
         else
         {
-            hurt = 1;
+            hurt = 5;
         }
     }
     void die()

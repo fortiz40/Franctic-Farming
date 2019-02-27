@@ -213,7 +213,7 @@ MonoBehaviour:
   Season: 0
   HungerBar: {fileID: 701737763}
   FoodBar: {fileID: 1279731620}
-  HurtCircle: 1
+  HurtCircle: 2
   MaxHunger: 100
   InitialFood: 0
   gameOverScreen: {fileID: 1438475101}
@@ -404,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 2663635811376820638, guid: c1cf31b1733a03d4281eb40494204e61,
         type: 3}
       propertyPath: goal
-      value: 1200
+      value: 600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1cf31b1733a03d4281eb40494204e61, type: 3}
@@ -797,6 +797,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6586646255422129272, guid: c1acbeae8c4dc994b9d3406f7fadc3fd,
+        type: 3}
+      propertyPath: ripenessSpeed.spring
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6586646255422129272, guid: c1acbeae8c4dc994b9d3406f7fadc3fd,
+        type: 3}
+      propertyPath: ripenessSpeed.summer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1acbeae8c4dc994b9d3406f7fadc3fd, type: 3}
