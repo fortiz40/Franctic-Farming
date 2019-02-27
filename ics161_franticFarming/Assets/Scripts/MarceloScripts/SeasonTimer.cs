@@ -109,6 +109,11 @@ public class SeasonTimer : MonoBehaviour
         return time;
     }
 
+    public int GetSeasonTimer()
+    {
+        return secondsPerSeason;
+    }
+
     public Season GetCurrentSeason()
     {
         return currentSeason;

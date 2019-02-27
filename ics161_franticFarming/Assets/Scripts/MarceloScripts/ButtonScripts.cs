@@ -22,7 +22,7 @@ public class ButtonScripts : MonoBehaviour
     // Public functions
     public void RestartLevel()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void QuitGame()
