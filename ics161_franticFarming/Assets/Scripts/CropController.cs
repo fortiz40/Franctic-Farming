@@ -13,26 +13,30 @@ public class CropController : MonoBehaviour
 
     private bool isPlanted;
     private bool isAlive;
+    private bool isMature;
+
     private Season currentSeason;
 
     public int Maturity { get; private set; } = 0;
-    public int Fertilization = 0;
+    public float Fertilization = 0;
 
     [SerializeField] private int cropMaturityLevel = 20; // Number to indicate when a crop is fully mature
 
     [SerializeField] private int maturityIncreaseRate = 2 ;  // Normal rate for crop maturity growth when water = 0
     [SerializeField] private int fertilizedIncreaseRate = 1; // Added rate when crop has > 0 Fertilization
     [SerializeField] private int fertilizedDecreaseRate = 1; // Decreases mautirity growth when Fertilization = 0
-    [SerializeField] private int baseFertilizerAddAmount = 50; //Amount to increase Fertilization when crop is clicked
+    [SerializeField] private float baseFertilizerAddAmount = 50; //Amount to increase Fertilization when crop is clicked
     [SerializeField] private int dropFertilizationRate = 1; // Amount to drop fertilization by each second
-
     [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
 
     void Awake()
     {
         currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+
         isPlanted = false;
         isAlive = false;
+        isMature = false;
+
         Maturity = 0;
         Fertilization = 0;
     }
@@ -79,7 +83,24 @@ public class CropController : MonoBehaviour
 
     public void harvestCrop()
     {
+        Debug.Log("HARVESTING!");
+        Debug.LogFormat("CURRENT MATURIRY: {0}", Maturity);
+        ScoreCounter.instance.Score += Maturity;
+        resetCrop();
+    }
 
+    /// <summary>
+    /// Resets the crop back to the initial state
+    /// </summary>
+    private void resetCrop()
+    {
+        isAlive = false;
+        isMature = false;
+        isPlanted = false;
+        currentCropStatusSpriteRenderer.sprite = noCropSprite;
+
+        Maturity = 0;
+        Fertilization = 0.0f;
     }
 
 
@@ -96,8 +117,8 @@ public class CropController : MonoBehaviour
         {
             Maturity += maturityIncreaseRate - fertilizedDecreaseRate;
         }
-        Debug.LogFormat("Current Maturity: {0}", Maturity);
-        if (Maturity >= cropMaturityLevel)
+        //Debug.LogFormat("Current Maturity: {0}", Maturity);
+        if (Maturity >= cropMaturityLevel && !isMature)
         {
             Debug.Log("MATURING!");
             changeCropToMature();
@@ -106,6 +127,7 @@ public class CropController : MonoBehaviour
 
     private void changeCropToMature()
     {
+        isMature = true;
         currentCropStatusSpriteRenderer.sprite = matureCropSprite;
     }
 
@@ -144,6 +166,10 @@ public class CropController : MonoBehaviour
     private void OnSeasonChangeListener(Season season)
     {
         currentSeason = season;
+        if (season == Season.fall && isMature) // If it becomes fall again, and crop was not harvested, it dies and is reset to start state
+        {
+            resetCrop();
+        }
     }
 
 
