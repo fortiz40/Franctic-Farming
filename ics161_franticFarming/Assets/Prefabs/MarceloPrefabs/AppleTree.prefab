@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 6586646255422129272}
   m_Layer: 0
   m_Name: AppleTree
-  m_TagString: Untagged
+  m_TagString: AppleTree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -347,12 +347,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4fbe63f8a7eee2498aae65453f291ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickSpeed: 30
+  continuousPickSpeed: 30
+  discretePickSpeed: 20
   ripenessSpeed:
-    fall: 10
+    fall: 15
     winter: 0
-    spring: 2.5
-    summer: 5
+    spring: 7.5
+    summer: 9
 --- !u!1 &6586646255580420365
 GameObject:
   m_ObjectHideFlags: 0

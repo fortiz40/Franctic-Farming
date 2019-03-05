@@ -14,7 +14,9 @@ public class AppleTree : MonoBehaviour
     }
 
     [SerializeField]
-    private float pickSpeed = 30f;
+    private float continuousPickSpeed = 30f;
+    [SerializeField]
+    private float discretePickSpeed = 20f;
     [SerializeField]
     private RipenessSpeed ripenessSpeed = null;
 
@@ -192,7 +194,27 @@ public class AppleTree : MonoBehaviour
     // Public functions
     public float GetFood()
     {
-        float foodTaken = pickSpeed * Time.deltaTime;
+        float foodTaken = continuousPickSpeed * Time.deltaTime;
+
+        // If taken food is greater than how much food is left on the tree...
+        if (foodTaken > ripeness)
+        {
+            foodTaken = ripeness;
+            ripeness = 0f;
+        }
+
+        // Else, just decrement the tree's food with the food that will be taken...
+        else
+        {
+            ripeness -= foodTaken;
+        }
+
+        return foodTaken;
+    }
+
+    public float GetFoodDiscrete()
+    {
+        float foodTaken = discretePickSpeed;
 
         // If taken food is greater than how much food is left on the tree...
         if (foodTaken > ripeness)
