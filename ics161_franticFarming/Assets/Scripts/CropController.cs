@@ -45,8 +45,9 @@ public class CropController : MonoBehaviour
     [SerializeField] private float baseFertilizerAddAmount = 10; //Amount to increase Fertilization when crop is clicked
     [SerializeField] private int dropFertilizationRate = 1; // Amount to drop fertilization by each second
     [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
-    [SerializeField] private int cropHeathDropRate = -1; // Number to decrease crop maturity by when bird is on it
-    [SerializeField] private float famishedMaturityPercent = 0.75f; // This percentage will be multiplied by the maturityIncreaseRate when famished
+    [SerializeField] private int cropMaturityDropRate = -1; // Number to decrease crop maturity by when bird is on it
+
+    //[SerializeField] private float famishedMaturityPercent = 0.75f; // This percentage will be multiplied by the maturityIncreaseRate when famished
 
     private Player player;
     void Awake()
@@ -199,9 +200,13 @@ public class CropController : MonoBehaviour
         {
             Maturity += maturityIncreaseRate;
         }
-        else
+        else if (isFamished)
         {
-            Maturity +=  (maturityIncreaseRate);
+            Maturity +=  (maturityIncreaseRate / 2);
+        }
+        if (hasCrow)
+        {
+            Maturity += cropMaturityDropRate; 
         }
 
         maturityText.text = "Score:\n" + Maturity.ToString();
@@ -233,27 +238,27 @@ public class CropController : MonoBehaviour
     /// <summary>
     /// Called when the crop tile if left mouse clicked. It adds water to the crop, if it is seeded or grown
     /// </summary>
-    void OnMouseDown()
-    {
-        Debug.Log("CLICKED CROP");
+    //void OnMouseDown()
+    //{
+    //    Debug.Log("CLICKED CROP");
 
-        print("isPlanted: " + isPlanted);
-        print("currentSeason: " + currentSeason);
-        if(!isPlanted)
-        {
-            if (DEBUG) Debug.Log("PLANTING CROP");
-            plantCrop();
-        }
-        else if(isPlanted && (currentSeason == Season.winter || currentSeason == Season.spring))
-        {
-            Debug.Log("ADDING FERTILIZER");
-            addFertilizer();
-        }
-        else if(isPlanted && currentSeason == Season.summer)
-        {
-            harvestCrop();
-        }
-    }
+    //    print("isPlanted: " + isPlanted);
+    //    print("currentSeason: " + currentSeason);
+    //    if (!isPlanted)
+    //    {
+    //        if (DEBUG) Debug.Log("PLANTING CROP");
+    //        plantCrop();
+    //    }
+    //    else if (isPlanted && (currentSeason == Season.winter || currentSeason == Season.spring))
+    //    {
+    //        Debug.Log("ADDING FERTILIZER");
+    //        addFertilizer();
+    //    }
+    //    else if (isPlanted && currentSeason == Season.summer)
+    //    {
+    //        harvestCrop();
+    //    }
+    //}
 
     public void interact()
     {
