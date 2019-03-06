@@ -72,14 +72,17 @@ public class Player : MonoBehaviour
         // Eat
         if (Input.GetKeyDown(KeyCode.C))
         {
-            hunger += RemoveFood(10);
-
-            if (hunger > 100)
+            if (hunger < 100)
             {
-                hunger = 100;
-            }
+                hunger += RemoveFood(10);
 
-            HungerBar.value = hunger;
+                if (hunger > 100)
+                {
+                    hunger = 100;
+                }
+
+                HungerBar.value = hunger;
+            }
         }
 
     }
