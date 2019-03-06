@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     private float move_speed;
     Rigidbody2D m_rigidbody;
     Animator m_animator;
+    BoxCollider2D m_collider;
+    Vector2 direction;
+    float maxValue;
+
 
     [SerializeField]
     private GameObject gameOverScreen = null;
@@ -30,12 +34,14 @@ public class Player : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
+        maxValue = gameObject.GetComponent<BoxCollider2D>().size.y / 2;
         move_speed = 5f;
         hunger = MaxHunger;
         food = InitialFood;
         HungerBar.value = hunger;
         FoodBar.value = food;
         hurt = 5;
+        direction = new Vector2(0, -1);
 
         SeasonTimer.instance.m_SeasonChange.AddListener(UpdateSeason);
     }
@@ -57,6 +63,11 @@ public class Player : MonoBehaviour
             die();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            interactCrop();
+        }
+        
         // Eat
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -69,6 +80,7 @@ public class Player : MonoBehaviour
 
             HungerBar.value = hunger;
         }
+
     }
 
     void Move()
@@ -162,4 +174,16 @@ public class Player : MonoBehaviour
         explaination.text = "You have starved to death!\n(Score = " + ScoreCounter.instance.Score + ")";
     }
     
+    void interactCrop()
+    {
+
+        RaycastHit2D hit;
+        Debug.Log("Shoot Ray!!!");
+        hit = (Physics2D.Raycast(transform.position, direction, maxValue));
+        if ( hit != null && hit.collider.gameObject.CompareTag("Crop"))
+        {
+            Debug.Log("Interact!!!");
+            hit.collider.gameObject.GetComponent<CropController>().interact();
+        }
+    }
 }
