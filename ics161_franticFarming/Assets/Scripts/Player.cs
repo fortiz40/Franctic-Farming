@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
         RaycastHit2D hit;
         Debug.Log("Shoot Ray!!!");
         hit = (Physics2D.Raycast(transform.position, direction, maxValue));
-        if ( hit != null && hit.collider.gameObject.CompareTag("Crop"))
+        if (hit && hit.collider.gameObject.CompareTag("Crop"))
         {
             Debug.Log("Interact!!!");
             hit.collider.gameObject.GetComponent<CropController>().interact();
@@ -195,7 +195,7 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D hit;
         hit = (Physics2D.Raycast(transform.position, direction, maxValue));
-        if (hit != null && hit.collider.gameObject.CompareTag("AppleTree"))
+        if (hit && hit.collider.gameObject.CompareTag("AppleTree"))
         {
             addFood(hit.collider.gameObject.GetComponent<AppleTree>().GetFoodDiscrete());
         }
