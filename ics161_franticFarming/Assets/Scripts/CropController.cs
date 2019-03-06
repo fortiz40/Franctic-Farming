@@ -11,10 +11,12 @@ public class CropController : MonoBehaviour
     private bool DEBUG = true; // Change to see debug messages or not
 
     private SpriteRenderer currentCropStatusSpriteRenderer;
+    private SpriteRenderer crowSprite;
 
     [SerializeField] private Sprite noCropSprite;
-    [SerializeField] private Sprite[] plantedCropSprites;
+    [SerializeField] private Sprite plantedCropSprite;
     [SerializeField] private Sprite matureCropSprite;
+    [SerializeField] private Sprite famishedCropSprite;
 
     private TextMeshProUGUI maturityText;
     private TextMeshProUGUI fertilizationText;
@@ -23,11 +25,12 @@ public class CropController : MonoBehaviour
     private bool isAlive;
     private bool isMature;
     private bool isFamished;
+    private bool hasCrow;
 
     private Season currentSeason;
 
-    [SerializeField] private float famishCropChance = 0.05f;
-    [SerializeField] private float crowAppearChance = 0.25f;
+    [SerializeField] private float famishCropChance = 2.0f;
+    [SerializeField] private float crowAppearChance = 2.0f;
 
     public int Maturity { get; private set; } = 0;
     public float Fertilization = 0;
@@ -39,19 +42,34 @@ public class CropController : MonoBehaviour
     //[SerializeField] private int fertilizedIncreaseRate = 2; // Added rate when crop has > 0 Fertilization
     //[SerializeField] private int fertilizedDecreaseRate = 1; // Decreases mautirity growth when Fertilization = 0
 
-    [SerializeField] private float baseFertilizerAddAmount = 50; //Amount to increase Fertilization when crop is clicked
+    [SerializeField] private float baseFertilizerAddAmount = 10; //Amount to increase Fertilization when crop is clicked
     [SerializeField] private int dropFertilizationRate = 1; // Amount to drop fertilization by each second
     [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
+    [SerializeField] private int cropHeathDropRate = -1; // Number to decrease crop maturity by when bird is on it
+    [SerializeField] private float famishedMaturityPercent = 0.75f; // This percentage will be multiplied by the maturityIncreaseRate when famished
 
     private Player player;
     void Awake()
     {
-        currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+
+        SpriteRenderer[] sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            if (sprites[i].gameObject.CompareTag("CrowSprite")) crowSprite = sprites[i];
+            else if (sprites[i].gameObject.CompareTag("CurrentCropStatusSprite")) currentCropStatusSpriteRenderer = sprites[i];
+        }
+
+        crowSprite.gameObject.SetActive(false);
+
+        //currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+        //crowSprite = 
 
         isPlanted = false;
         isAlive = false;
         isMature = false;
         isFamished = false;
+        hasCrow = false;
 
         Maturity = 0;
         Fertilization = 0;
@@ -110,8 +128,7 @@ public class CropController : MonoBehaviour
             if (DEBUG) Debug.Log("PLANTING from plantCrop()");
             isPlanted = true;
             isAlive = true;
-            int randomSprite = Random.Range(0, plantedCropSprites.Length);
-            currentCropStatusSpriteRenderer.sprite = plantedCropSprites[randomSprite];
+            currentCropStatusSpriteRenderer.sprite = plantedCropSprite;
             StartCoroutine(UpdateCropStatus());
         }
     }
@@ -126,6 +143,11 @@ public class CropController : MonoBehaviour
         if (isFamished)
         {
             isFamished = false;
+            if (!isMature)
+            {
+                currentCropStatusSpriteRenderer.sprite = plantedCropSprite;
+            }
+            else currentCropStatusSpriteRenderer.sprite = matureCropSprite;
         }
 
         Fertilization += player.RemoveFood(baseFertilizerAddAmount);
@@ -179,7 +201,7 @@ public class CropController : MonoBehaviour
         }
         else
         {
-            Maturity += (maturityIncreaseRate / 2);
+            Maturity +=  (maturityIncreaseRate);
         }
 
         maturityText.text = "Score:\n" + Maturity.ToString();
@@ -257,6 +279,7 @@ public class CropController : MonoBehaviour
 
     private void OnSeasonChangeListener(Season season)
     {
+        if (DEBUG) Debug.Log("SEASON CHANGING TO " + season.ToString());
         currentSeason = season;
         if (season == Season.fall && isMature) // If it becomes fall again, and crop was not harvested, it dies and is reset to start state
         {
@@ -280,14 +303,21 @@ public class CropController : MonoBehaviour
             maturityIncrease();
             decreaseFertilization();
 
+            float rand = Random.Range(0.0f, 1.0f);
+
             if (isPlanted && (currentSeason == Season.winter))
             {
-                if ( famishCropChance > Random.Range(0.0f, 1.0f)) famishCrop();
+                if (DEBUG)
+                {
+                    Debug.Log("Famish chance");
+                    Debug.Log(rand);
+                }
+                if ( famishCropChance >= rand) famishCrop();
             }
 
             if (isPlanted && (currentSeason == Season.spring))
             {
-                if (crowAppearChance > Random.Range(0.0f, 1.0f)) crowAppear();
+                if (crowAppearChance >= rand) crowAppear();
             }
 
             yield return new WaitForSeconds(updateCropSeconds);
@@ -296,12 +326,16 @@ public class CropController : MonoBehaviour
 
     private void famishCrop()
     {
-
+        if (DEBUG) Debug.Log("FAMISHING CROP!");
+        currentCropStatusSpriteRenderer.sprite = famishedCropSprite;
+        isFamished = true;
     }
 
     private void crowAppear()
     {
-
+        if (DEBUG) Debug.Log("BIRD APPEARING!");
+        crowSprite.gameObject.SetActive(true);
+        hasCrow = true;
     }
 
     public void OnMouseEnter()
@@ -320,5 +354,15 @@ public class CropController : MonoBehaviour
     {
         Debug.Log("Collision!");
         Debug.Log(other.gameObject.tag.ToString());
+        maturityText.gameObject.SetActive(true);
+
+        if (hasCrow) crowSprite.gameObject.SetActive(false);
+
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        maturityText.gameObject.SetActive(false);
+
     }
 }
