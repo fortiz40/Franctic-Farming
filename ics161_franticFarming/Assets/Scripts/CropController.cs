@@ -45,7 +45,7 @@ public class CropController : MonoBehaviour
     [SerializeField] private float baseFertilizerAddAmount = 10; //Amount to increase Fertilization when crop is clicked
     [SerializeField] private int dropFertilizationRate = 1; // Amount to drop fertilization by each second
     [SerializeField] private float updateCropSeconds = 1.0f; // Number of seconds to wait between each UpdateCropStatus call
-    [SerializeField] private int cropMaturityDropRate = -1; // Number to decrease crop maturity by when bird is on it
+    [SerializeField] private int crowDropRate = -1; // Number to decrease crop maturity by when bird is on it
 
     //[SerializeField] private float famishedMaturityPercent = 0.75f; // This percentage will be multiplied by the maturityIncreaseRate when famished
 
@@ -196,17 +196,17 @@ public class CropController : MonoBehaviour
         //    Maturity += maturityIncreaseRate - fertilizedDecreaseRate;
         //}
 
-        if (!isFamished)
+        if (hasCrow)
         {
-            Maturity += maturityIncreaseRate;
+            Maturity += crowDropRate;
         }
         else if (isFamished)
         {
             Maturity +=  (maturityIncreaseRate / 2);
         }
-        if (hasCrow)
+        else
         {
-            Maturity += cropMaturityDropRate; 
+            Maturity += maturityIncreaseRate;
         }
 
         maturityText.text = "Score:\n" + Maturity.ToString();
@@ -361,7 +361,11 @@ public class CropController : MonoBehaviour
         Debug.Log(other.gameObject.tag.ToString());
         maturityText.gameObject.SetActive(true);
 
-        if (hasCrow) crowSprite.gameObject.SetActive(false);
+        if (hasCrow)
+        {
+            crowSprite.gameObject.SetActive(false);
+            hasCrow = false;
+        }
 
     }
 
