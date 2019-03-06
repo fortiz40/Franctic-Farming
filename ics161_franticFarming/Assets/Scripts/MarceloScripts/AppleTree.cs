@@ -50,6 +50,7 @@ public class AppleTree : MonoBehaviour
 
     void Update()
     {
+        IncrementRipeness();
         UpdateVisuals();
     }
 
