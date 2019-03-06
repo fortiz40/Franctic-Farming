@@ -50,18 +50,6 @@ public class AppleTree : MonoBehaviour
 
     void Update()
     {
-        // While the tree is being clicked on, decrement ripeness from the tree and STOP incrementing
-        if (OnMouse(true))
-        {
-            player.addFood(GetFood());
-        }
-
-        // Else, just continue incrementing ripeness to the tree
-        else
-        {
-            IncrementRipeness();
-        }
-
         UpdateVisuals();
     }
 
