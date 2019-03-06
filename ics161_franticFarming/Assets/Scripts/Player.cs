@@ -66,10 +66,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             interactCrop();
+            interactApple();
         }
         
         // Eat
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             hunger += RemoveFood(10);
 
@@ -184,6 +185,16 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Interact!!!");
             hit.collider.gameObject.GetComponent<CropController>().interact();
+        }
+    }
+
+    void interactApple()
+    {
+        RaycastHit2D hit;
+        hit = (Physics2D.Raycast(transform.position, direction, maxValue));
+        if (hit != null && hit.collider.gameObject.CompareTag("AppleTree"))
+        {
+            addFood(hit.collider.gameObject.GetComponent<AppleTree>().GetFoodDiscrete());
         }
     }
 }
