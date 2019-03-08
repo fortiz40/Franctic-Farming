@@ -12,6 +12,12 @@ public class CropController : MonoBehaviour
 
     private SpriteRenderer currentCropStatusSpriteRenderer;
     private SpriteRenderer crowSprite;
+    private SpriteRenderer cornSprite;
+
+    private Color greenColorCrop;
+    private Color matureCropColor;
+    private Color famishedCropColor;
+
 
     [SerializeField] private Sprite noCropSprite;
     [SerializeField] private Sprite plantedCropSprite;
@@ -52,19 +58,12 @@ public class CropController : MonoBehaviour
     private Player player;
     void Awake()
     {
-
-        SpriteRenderer[] sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
-
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            if (sprites[i].gameObject.CompareTag("CrowSprite")) crowSprite = sprites[i];
-            else if (sprites[i].gameObject.CompareTag("CurrentCropStatusSprite")) currentCropStatusSpriteRenderer = sprites[i];
-        }
-
-        crowSprite.gameObject.SetActive(false);
-
         //currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
         //crowSprite = 
+
+        greenColorCrop = new Color(0.0f, 0.8679245f, 0.06655199f, 1.0f);
+        matureCropColor = new Color(1.0f, 0.8178636f, 0.0f, 1.0f);
+        famishedCropColor = new Color(0.0f, 0.25f, 1.0f, 1.0f);
 
         isPlanted = false;
         isAlive = false;
@@ -80,6 +79,19 @@ public class CropController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        SpriteRenderer[] sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            if (sprites[i].gameObject.CompareTag("CrowSprite")) crowSprite = sprites[i];
+            else if (sprites[i].gameObject.CompareTag("CurrentCropStatusSprite")) currentCropStatusSpriteRenderer = sprites[i];
+            else if (sprites[i].gameObject.CompareTag("CornSprite")) cornSprite = sprites[i];
+        }
+
+        crowSprite.gameObject.SetActive(false);
+        cornSprite.gameObject.SetActive(false);
+
         currentCropStatusSpriteRenderer.sprite = noCropSprite;
         SeasonTimer.instance.m_SeasonChange.AddListener(OnSeasonChangeListener);
         currentSeason = SeasonTimer.instance.GetCurrentSeason();
@@ -130,6 +142,8 @@ public class CropController : MonoBehaviour
             isPlanted = true;
             isAlive = true;
             currentCropStatusSpriteRenderer.sprite = plantedCropSprite;
+            cornSprite.color = greenColorCrop;
+            cornSprite.gameObject.SetActive(true);
             StartCoroutine(UpdateCropStatus());
         }
     }
@@ -151,8 +165,14 @@ public class CropController : MonoBehaviour
             if (!isMature)
             {
                 currentCropStatusSpriteRenderer.sprite = plantedCropSprite;
+                cornSprite.color = greenColorCrop;
             }
-            else currentCropStatusSpriteRenderer.sprite = matureCropSprite;
+            else
+            {
+                currentCropStatusSpriteRenderer.sprite = matureCropSprite;
+                cornSprite.color = matureCropColor;
+            }
+
         }
     }
 
@@ -174,10 +194,17 @@ public class CropController : MonoBehaviour
     {
         if (DEBUG) Debug.Log("RESETTING CROP");
 
+        isPlanted = false;
         isAlive = false;
         isMature = false;
-        isPlanted = false;
+        isFamished = false;
+        hasCrow = false;
+
+        crowSprite.gameObject.SetActive(false);
+        cornSprite.gameObject.SetActive(false);
+
         currentCropStatusSpriteRenderer.sprite = noCropSprite;
+        cornSprite.color = greenColorCrop;
 
         Maturity = 0;
         Fertilization = 0.0f;
@@ -201,6 +228,7 @@ public class CropController : MonoBehaviour
         if (hasCrow)
         {
             Maturity += crowDropRate;
+            if (Maturity < cropMaturityLevel) dematureCrop();
         }
         else if (isFamished)
         {
@@ -211,6 +239,7 @@ public class CropController : MonoBehaviour
             Maturity += maturityIncreaseRate;
         }
 
+
         maturityText.text = "Score:\n" + Maturity.ToString();
         if (Maturity >= cropMaturityLevel && !isMature)
         {
@@ -219,10 +248,17 @@ public class CropController : MonoBehaviour
         }
     }
 
+    private void dematureCrop()
+    {
+        isMature = false;
+        cornSprite.color = greenColorCrop;
+    }
+
     private void changeCropToMature()
     {
         isMature = true;
         currentCropStatusSpriteRenderer.sprite = matureCropSprite;
+        cornSprite.color = matureCropColor;
     }
 
 
@@ -335,6 +371,7 @@ public class CropController : MonoBehaviour
     {
         if (DEBUG) Debug.Log("FAMISHING CROP!");
         currentCropStatusSpriteRenderer.sprite = famishedCropSprite;
+        cornSprite.color = famishedCropColor;
         isFamished = true;
     }
 
