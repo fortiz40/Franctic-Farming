@@ -67,7 +67,7 @@ public class AppleTree : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        if (ripeness <= 0f)
+        if (ripeness <= 20f)
         {
             appleStages[0].SetActive(false);
             appleStages[1].SetActive(false);
@@ -75,7 +75,7 @@ public class AppleTree : MonoBehaviour
             appleStages[3].SetActive(false);
             appleStages[4].SetActive(false);
         }
-        else if (ripeness > 0f && ripeness < 25f)
+        else if (ripeness > 20f && ripeness < 40f)
         {
             appleStages[0].SetActive(true);
             appleStages[1].SetActive(false);
@@ -83,7 +83,7 @@ public class AppleTree : MonoBehaviour
             appleStages[3].SetActive(false);
             appleStages[4].SetActive(false);
         }
-        else if (ripeness >= 25f && ripeness < 50f)
+        else if (ripeness >= 40f && ripeness < 60f)
         {
             appleStages[0].SetActive(true);
             appleStages[1].SetActive(true);
@@ -91,7 +91,7 @@ public class AppleTree : MonoBehaviour
             appleStages[3].SetActive(false);
             appleStages[4].SetActive(false);
         }
-        else if (ripeness >= 50f && ripeness < 75f)
+        else if (ripeness >= 60f && ripeness < 80f)
         {
             appleStages[0].SetActive(true);
             appleStages[1].SetActive(true);
@@ -99,7 +99,7 @@ public class AppleTree : MonoBehaviour
             appleStages[3].SetActive(false);
             appleStages[4].SetActive(false);
         }
-        else if (ripeness >= 75f && ripeness < 100f)
+        else if (ripeness >= 80f && ripeness < 100f)
         {
             appleStages[0].SetActive(true);
             appleStages[1].SetActive(true);

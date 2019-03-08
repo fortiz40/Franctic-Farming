@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea9a48db13dbb74e88e4399198e3dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsPerSeason: 15
+  secondsPerSeason: 30
   timerText: {fileID: 0}
   seasonText: {fileID: 0}
 --- !u!114 &2663635811376820638
@@ -73,3 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd610d2025595d046afe59d5fc5754f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingGoal: 2700
+  goalCap: 6000
+  goalIncrementPerYear: 500
+  gameOverScreen: {fileID: 0}
+  explaination: {fileID: 0}
+  scoreText: {fileID: 0}
+  goalText: {fileID: 0}

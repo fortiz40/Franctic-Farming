@@ -654,11 +654,6 @@ PrefabInstance:
       propertyPath: seasonText
       value: 
       objectReference: {fileID: 1735184152}
-    - target: {fileID: 9047367835019257423, guid: c1cf31b1733a03d4281eb40494204e61,
-        type: 3}
-      propertyPath: secondsPerSeason
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 2663635811376820638, guid: c1cf31b1733a03d4281eb40494204e61,
         type: 3}
       propertyPath: scoreText
@@ -679,11 +674,6 @@ PrefabInstance:
       propertyPath: explaination
       value: 
       objectReference: {fileID: 79911249}
-    - target: {fileID: 2663635811376820638, guid: c1cf31b1733a03d4281eb40494204e61,
-        type: 3}
-      propertyPath: goal
-      value: 2700
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1cf31b1733a03d4281eb40494204e61, type: 3}
 --- !u!1001 &459590944
@@ -808,11 +798,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2115865746, guid: d3eb1b98daec01741a06e7733d4dd934, type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2115865746, guid: d3eb1b98daec01741a06e7733d4dd934, type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3eb1b98daec01741a06e7733d4dd934, type: 3}

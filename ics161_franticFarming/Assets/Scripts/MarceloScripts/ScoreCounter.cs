@@ -10,31 +10,39 @@ public class ScoreCounter : MonoBehaviour
 
     // Variables
     [SerializeField]
-    private int goal = 300;
+    private int initialGoal = 2700;
+    [SerializeField]
+    private int goalCap = 6000;
+    [SerializeField]
+    private int goalIncrementPerYear = 500;
     [SerializeField]
     private GameObject gameOverScreen = null;
     [SerializeField]
     private TextMeshProUGUI explaination = null;
 
+    public int Goal { get; private set; }
     public int Score { get; set; }
     public TextMeshProUGUI scoreText = null;
     public TextMeshProUGUI goalText = null;
 
     void Awake()
     {
+        // Enforce singleton pattern
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
 
+        // Initialize variables
         Score = 0;
+        Goal = initialGoal;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         SeasonTimer.instance.m_SeasonChange.AddListener(OnSeasonChange);
-        goalText.text = goal.ToString();
+        goalText.text = Goal.ToString();
     }
 
     // Update is called once per frame
@@ -51,6 +59,7 @@ public class ScoreCounter : MonoBehaviour
             if (HasReachedGoal())
             {
                 Score = 0;
+                IncrementGoal();
             }
             else
             {
@@ -63,6 +72,18 @@ public class ScoreCounter : MonoBehaviour
 
     private bool HasReachedGoal()
     {
-        return Score >= goal;
+        return Score >= Goal;
+    }
+
+    private void IncrementGoal()
+    {
+        // Increment the goal value, but not over the desired goal cap
+        Goal += goalIncrementPerYear;
+
+        if (Goal > goalCap)
+            Goal = goalCap;
+
+        // Update the UI holding the Goal text
+        goalText.text = Goal.ToString();
     }
 }
