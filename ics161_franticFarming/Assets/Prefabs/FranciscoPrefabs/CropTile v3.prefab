@@ -130,15 +130,15 @@ MonoBehaviour:
   plantedCropSprite: {fileID: 21300000, guid: 53055a93fda804a9f988ee06ab59b359, type: 3}
   matureCropSprite: {fileID: 21300000, guid: 81c7a4999019d4591b4168e0f9a359bd, type: 3}
   famishedCropSprite: {fileID: 21300000, guid: 57b117f0b668844a6a6567884cbe4f45, type: 3}
-  famishCropChance: 0.07
+  famishCropChance: 0.03
   crowAppearChance: 0.07
   Fertilization: 0
-  cropMaturityLevel: 30
+  cropMaturityLevel: 300
   maturityIncreaseRate: 4
   baseFertilizerAddAmount: 20
   dropFertilizationRate: 1
   updateCropSeconds: 1
-  cropMaturityDropRate: -1
+  crowDropRate: -5
 --- !u!61 &1041880246
 BoxCollider2D:
   m_ObjectHideFlags: 0
