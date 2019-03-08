@@ -141,7 +141,11 @@ public class CropController : MonoBehaviour
     {
         //Debug.LogFormat("ADDING {0.0f} FERTILIZER AND REMOVING FROM PLAYER", baseFertilizerAddAmount);
 
-        if (isFamished)
+        float amountRemoved = player.RemoveFood(baseFertilizerAddAmount);
+
+        Fertilization += amountRemoved;
+
+        if ( (amountRemoved > 0) && isFamished)
         {
             isFamished = false;
             if (!isMature)
@@ -150,8 +154,6 @@ public class CropController : MonoBehaviour
             }
             else currentCropStatusSpriteRenderer.sprite = matureCropSprite;
         }
-
-        Fertilization += player.RemoveFood(baseFertilizerAddAmount);
     }
 
     public void harvestCrop()
