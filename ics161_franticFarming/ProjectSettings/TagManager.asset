@@ -8,6 +8,9 @@ TagManager:
   - CropMaturityText
   - CropFertilizationText
   - AppleTree
+  - CurrentCropStatusSprite
+  - CrowSprite
+  - CornSprite
   layers:
   - Default
   - TransparentFX
