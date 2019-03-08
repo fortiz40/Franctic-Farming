@@ -319,7 +319,7 @@ public class CropController : MonoBehaviour
                     Debug.Log("Famish chance");
                     Debug.Log(rand);
                 }
-                if ( famishCropChance >= rand) famishCrop();
+                if ( (Fertilization <= 0) && famishCropChance >= rand) famishCrop();
             }
 
             if (isPlanted && (currentSeason == Season.spring))
