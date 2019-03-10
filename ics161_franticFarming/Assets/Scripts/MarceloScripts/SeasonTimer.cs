@@ -14,11 +14,16 @@ public class SeasonEvent : UnityEvent<Season> { }
 
 public class SeasonTimer : MonoBehaviour
 {
+    // Singleton
     public static SeasonTimer instance;
 
+    // Unity Events
     [System.NonSerialized]
     public SeasonEvent m_SeasonChange;
+    [System.NonSerialized]
+    public UnityEvent m_YearChange;
 
+    // Variables
     [SerializeField]
     private int secondsPerSeason = 15;
 
@@ -30,8 +35,17 @@ public class SeasonTimer : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        // Enforce Singleton pattern
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
+        // Initialize Unity Events
         m_SeasonChange = new SeasonEvent();
+        m_YearChange = new UnityEvent();
+
+        // Initialize variables
         time = 0;
         currentSeason = Season.fall;
     }
@@ -55,7 +69,10 @@ public class SeasonTimer : MonoBehaviour
         {
             case 0:
                 if (currentSeason != Season.fall)
+                {
                     m_SeasonChange.Invoke(Season.fall);
+                    m_YearChange.Invoke();
+                }
 
                 currentSeason = Season.fall;
                 break;
