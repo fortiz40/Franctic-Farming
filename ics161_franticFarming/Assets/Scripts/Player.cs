@@ -66,7 +66,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             interactCrop();
-            interactApple();
+            if(food < 100)
+            {
+                interactApple();
+            }   
         }
         
         // Eat
