@@ -14,9 +14,10 @@ public class CropController : MonoBehaviour
     private SpriteRenderer crowSprite;
     private SpriteRenderer cornSprite;
 
-    private Color greenColorCrop;
-    private Color matureCropColor;
-    private Color famishedCropColor;
+
+    [SerializeField] private Color  greenColorCrop = new Color(0.0f, 0.8679245f, 0.06655199f, 1.0f);
+    [SerializeField] private Color matureCropColor = new Color(1.0f, 0.8178636f, 0.0f, 1.0f);
+    [SerializeField] private Color famishedCropColor = new Color(0.0f, 0.25f, 1.0f, 1.0f);
 
 
     [SerializeField] private Sprite noCropSprite;
@@ -61,9 +62,9 @@ public class CropController : MonoBehaviour
         //currentCropStatusSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
         //crowSprite = 
 
-        greenColorCrop = new Color(0.0f, 0.8679245f, 0.06655199f, 1.0f);
-        matureCropColor = new Color(1.0f, 0.8178636f, 0.0f, 1.0f);
-        famishedCropColor = new Color(0.0f, 0.25f, 1.0f, 1.0f);
+        //greenColorCrop = new Color(0.0f, 0.8679245f, 0.06655199f, 1.0f);
+        //matureCropColor = new Color(1.0f, 0.8178636f, 0.0f, 1.0f);
+        //famishedCropColor = new Color(0.0f, 0.25f, 1.0f, 1.0f);
 
         isPlanted = false;
         isAlive = false;
@@ -242,7 +243,7 @@ public class CropController : MonoBehaviour
         }
 
 
-        maturityText.text = "Score:\n" + Maturity.ToString();
+        maturityText.text = Maturity.ToString();
         if (Maturity >= cropMaturityLevel && !isMature)
         {
             if (DEBUG) Debug.Log("MATURING!");
