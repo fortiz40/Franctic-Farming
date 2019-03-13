@@ -233,6 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6586646255422129274}
   - component: {fileID: 6586646255422129273}
+  - component: {fileID: 7298219175725446432}
   - component: {fileID: 6586646255422129271}
   - component: {fileID: 6586646255422129272}
   m_Layer: 0
@@ -309,6 +310,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &7298219175725446432
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6586646255422129270}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.019257188, y: 0.28188777}
+  m_Size: {x: 2.627694, y: 2.8460383}
+  m_Direction: 0
 --- !u!61 &6586646255422129271
 BoxCollider2D:
   m_ObjectHideFlags: 0
