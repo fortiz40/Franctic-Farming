@@ -120,7 +120,7 @@ public class CropController : MonoBehaviour
         }
 
         //fertilizationText.text = "FERTILIZATION";
-        maturityText.text = "Score:\n0";
+        maturityText.text = "0";
         maturityText.gameObject.SetActive(false);
         //fertilizationText.gameObject.SetActive(false);
     }
@@ -202,6 +202,8 @@ public class CropController : MonoBehaviour
 
         crowSprite.gameObject.SetActive(false);
         cornSprite.gameObject.SetActive(false);
+
+        maturityText.text = "0";
 
         currentCropStatusSpriteRenderer.sprite = noCropSprite;
         cornSprite.color = greenColorCrop;
