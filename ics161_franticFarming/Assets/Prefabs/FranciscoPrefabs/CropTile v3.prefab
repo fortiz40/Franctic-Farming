@@ -107,7 +107,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041880245}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.369, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -127,6 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517822a060a4c5d44bd4df7c3006076e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  greenColorCrop: {r: 0, g: 0.8679245, b: 0.06655199, a: 1}
+  matureCropColor: {r: 1, g: 0.8178636, b: 0, a: 1}
+  famishedCropColor: {r: 0, g: 0.25, b: 1, a: 1}
   noCropSprite: {fileID: 21300000, guid: 4b303ec9e92770347a755b5e86c2fff0, type: 3}
   plantedCropSprite: {fileID: 21300000, guid: 4b303ec9e92770347a755b5e86c2fff0, type: 3}
   matureCropSprite: {fileID: 21300000, guid: 81c7a4999019d4591b4168e0f9a359bd, type: 3}
@@ -411,8 +414,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "Score: \n0 \n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 753bc97bc380b664e846621dfb5aa06e, type: 2}
+  m_sharedMaterial: {fileID: 21087050306168298, guid: 753bc97bc380b664e846621dfb5aa06e,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
