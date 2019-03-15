@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
         }
         
         // Eat
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.E))
         {
             if (hunger < 100)
             {
