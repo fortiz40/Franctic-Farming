@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     BoxCollider2D m_collider;
     Vector2 direction;
     float maxValue;
+    bool isDead;
 
 
     [SerializeField]
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
         FoodBar.value = food;
         hurt = 5;
         direction = new Vector2(0, -1);
+        isDead = false;
 
         SeasonTimer.instance.m_SeasonChange.AddListener(UpdateSeason);
     }
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour
             Hurt();
             timer = 0;
         }
-        if ( hunger <= 0)
+        if ( hunger <= 0 && !isDead)
         {
             die();
         }
@@ -176,7 +178,9 @@ public class Player : MonoBehaviour
     {
         Debug.Log("You Die!!!");
 
-        //Time.timeScale = 0f;
+        isDead = true;
+
+        Time.timeScale = 0f;
         gameOverScreen.SetActive(true);
         explaination.text = "You have starved to death!\n(Score = " + ScoreCounter.instance.Score + ")";
     }

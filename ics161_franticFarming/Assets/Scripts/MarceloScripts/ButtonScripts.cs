@@ -47,7 +47,9 @@ public class ButtonScripts : MonoBehaviour
 
     public void RestartLevel()
     {
-        //Time.timeScale = 1f;
+        
         SceneManager.LoadScene("MainScene");
+        Time.timeScale = 1f;
+        print(Time.timeScale);
     }
 }

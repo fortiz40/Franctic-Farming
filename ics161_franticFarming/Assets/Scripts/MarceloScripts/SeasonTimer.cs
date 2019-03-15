@@ -35,6 +35,8 @@ public class SeasonTimer : MonoBehaviour
 
     void Awake()
     {
+        print("In Awake");
+
         // Enforce Singleton pattern
         if (instance == null)
             instance = this;
@@ -52,6 +54,8 @@ public class SeasonTimer : MonoBehaviour
 
     void Start()
     {
+        print("In Start");
+
         StartCoroutine(StartTimer());
     }
 
