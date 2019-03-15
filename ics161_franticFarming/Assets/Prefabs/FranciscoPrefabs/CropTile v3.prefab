@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   greenColorCrop: {r: 0, g: 0.8679245, b: 0.06655199, a: 1}
   matureCropColor: {r: 1, g: 0.8178636, b: 0, a: 1}
-  famishedCropColor: {r: 0, g: 0.25, b: 1, a: 1}
+  famishedCropColor: {r: 0.41273585, g: 0.43463743, b: 0.5, a: 1}
   noCropSprite: {fileID: 21300000, guid: 4b303ec9e92770347a755b5e86c2fff0, type: 3}
   plantedCropSprite: {fileID: 21300000, guid: 4b303ec9e92770347a755b5e86c2fff0, type: 3}
   matureCropSprite: {fileID: 21300000, guid: 81c7a4999019d4591b4168e0f9a359bd, type: 3}
