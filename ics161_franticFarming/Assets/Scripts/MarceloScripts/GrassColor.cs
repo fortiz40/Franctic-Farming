@@ -20,6 +20,7 @@ public class GrassColor : MonoBehaviour
     private float transitionTimePercent = 0f;
 
     private SpriteRenderer spriteRenderer;
+    private ParticleSystem snowSystem;
 
     void Awake()
     {
@@ -29,7 +30,7 @@ public class GrassColor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        snowSystem = GetComponentInChildren<ParticleSystem>();  
     }
 
     // Update is called once per frame
@@ -39,9 +40,21 @@ public class GrassColor : MonoBehaviour
     }
 
     // Private functions
+
     private void UpdateColor(float percentThreshold)
     {
         float seasonPercentElapsed = SeasonTimer.instance.GetTime() % SeasonTimer.instance.GetSeasonTimer() / (float)SeasonTimer.instance.GetSeasonTimer();
+
+        Season currentSeason = SeasonTimer.instance.GetCurrentSeason();
+        if ( (currentSeason == Season.fall && seasonPercentElapsed > 0.78) || (currentSeason == Season.winter && seasonPercentElapsed < .8) )
+        {
+            snowSystem.gameObject.SetActive(true);
+            if (currentSeason == Season.winter && seasonPercentElapsed >= 0.65) {
+                var main = snowSystem.main;
+                main.loop = false;
+            }
+        }
+        else snowSystem.gameObject.SetActive(false);
 
         if (seasonPercentElapsed >= percentThreshold)
         {
@@ -54,9 +67,11 @@ public class GrassColor : MonoBehaviour
                     break;
                 case Season.winter:
                     spriteRenderer.color = Color.Lerp(winterColor, springColor, lerpPercent);
+
                     break;
                 case Season.spring:
                     spriteRenderer.color = Color.Lerp(springColor, summerColor, lerpPercent);
+
                     break;
                 case Season.summer:
                     spriteRenderer.color = Color.Lerp(summerColor, fallColor, lerpPercent);
