@@ -182,7 +182,8 @@ public class Player : MonoBehaviour
 
         Time.timeScale = 0f;
         gameOverScreen.SetActive(true);
-        explaination.text = "You have starved to death!\n(Score = " + ScoreCounter.instance.Score + ")";
+        explaination.text = "You have starved to death!\n" +
+            "(Seasons Survived: " + ScoreCounter.instance.SeasonsSurvived + ", Time Survived: " + SeasonTimer.instance.GetTime() + ")";
     }
     
     void interactCrop()

@@ -25,6 +25,8 @@ public class ScoreCounter : MonoBehaviour
     public TextMeshProUGUI scoreText = null;
     public TextMeshProUGUI goalText = null;
 
+    public int SeasonsSurvived { get; private set; }
+
     void Awake()
     {
         // Enforce singleton pattern
@@ -36,6 +38,7 @@ public class ScoreCounter : MonoBehaviour
         // Initialize variables
         Score = 0;
         Goal = initialGoal;
+        SeasonsSurvived = 0;
     }
 
     // Start is called before the first frame update
@@ -53,6 +56,8 @@ public class ScoreCounter : MonoBehaviour
 
     private void OnSeasonChange(Season newSeason)
     {
+        SeasonsSurvived++;
+
         if (newSeason == Season.fall)
         {
             Debug.Log("NEW YEAR!");
@@ -64,8 +69,10 @@ public class ScoreCounter : MonoBehaviour
             else
             {
                 // DO NOT wipe score, but show Game Over screen here...
+                Time.timeScale = 0f;
                 gameOverScreen.SetActive(true);
-                explaination.text = "You didn't earn enough point for the year!\n(Score = " + Score + ")";
+                explaination.text = "You did not earn enough points for the year!\n" + "" +
+                    "(Seasons Survived: " + SeasonsSurvived + ", Time Survived: " + SeasonTimer.instance.GetTime() + ")";
             }
         }
     }
