@@ -73,9 +73,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd610d2025595d046afe59d5fc5754f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingGoal: 2700
-  goalCap: 6000
-  goalIncrementPerYear: 500
+  initialGoal: 2700
+  goalCap: 12000
+  goalIncrementPerYear: 1000
   gameOverScreen: {fileID: 0}
   explaination: {fileID: 0}
   scoreText: {fileID: 0}

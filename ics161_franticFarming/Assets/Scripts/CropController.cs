@@ -33,6 +33,7 @@ public class CropController : MonoBehaviour
     private bool isMature;
     private bool isFamished;
     private bool hasCrow;
+    private bool isRunning;
 
     private Season currentSeason;
 
@@ -137,7 +138,7 @@ public class CropController : MonoBehaviour
     /// </summary>
     public void plantCrop()
     {
-        if (!isPlanted && currentSeason == Season.fall)
+        if (!isPlanted && !isAlive && currentSeason == Season.fall)
         {
             if (DEBUG) Debug.Log("PLANTING from plantCrop()");
             isPlanted = true;
@@ -145,7 +146,10 @@ public class CropController : MonoBehaviour
             currentCropStatusSpriteRenderer.sprite = plantedCropSprite;
             cornSprite.color = greenColorCrop;
             cornSprite.gameObject.SetActive(true);
-            StartCoroutine(UpdateCropStatus());
+            if (!isRunning)
+            {
+                StartCoroutine(UpdateCropStatus());
+            }
         }
     }
 
@@ -339,7 +343,10 @@ public class CropController : MonoBehaviour
     /// </summary>
     IEnumerator UpdateCropStatus()
     {
+
         if (DEBUG) Debug.Log("STARTING UPDATE CROP STATUS");
+
+        isRunning = true;
         while(isPlanted)
         {
             if (!isAlive)
@@ -368,6 +375,7 @@ public class CropController : MonoBehaviour
 
             yield return new WaitForSeconds(updateCropSeconds);
         }
+        isRunning = false;
     }
 
     private void famishCrop()
