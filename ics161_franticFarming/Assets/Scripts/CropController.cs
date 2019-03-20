@@ -244,7 +244,7 @@ public class CropController : MonoBehaviour
 
 
         maturityText.text = Maturity.ToString();
-        if (Maturity >= cropMaturityLevel && !isMature)
+        if (Maturity >= cropMaturityLevel && !isMature && !isFamished)
         {
             if (DEBUG) Debug.Log("MATURING!");
             changeCropToMature();
@@ -327,7 +327,7 @@ public class CropController : MonoBehaviour
     {
         if (DEBUG) Debug.Log("SEASON CHANGING TO " + season.ToString());
         currentSeason = season;
-        if (season == Season.fall && isMature) // If it becomes fall again, and crop was not harvested, it dies and is reset to start state
+        if (season == Season.fall) // If it becomes fall again, and crop was not harvested, it dies and is reset to start state
         {
             resetCrop();
         }
@@ -340,7 +340,7 @@ public class CropController : MonoBehaviour
     IEnumerator UpdateCropStatus()
     {
         if (DEBUG) Debug.Log("STARTING UPDATE CROP STATUS");
-        for(; ; )
+        while(isPlanted)
         {
             if (!isAlive)
             {
