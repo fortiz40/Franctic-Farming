@@ -1746,16 +1746,6 @@ PrefabInstance:
       propertyPath: explaination
       value: 
       objectReference: {fileID: 79911249}
-    - target: {fileID: 2663635811376820638, guid: c1cf31b1733a03d4281eb40494204e61,
-        type: 3}
-      propertyPath: goalCap
-      value: 12000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2663635811376820638, guid: c1cf31b1733a03d4281eb40494204e61,
-        type: 3}
-      propertyPath: goalIncrementPerYear
-      value: 1000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1cf31b1733a03d4281eb40494204e61, type: 3}
 --- !u!1 &396709194
