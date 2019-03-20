@@ -31,7 +31,7 @@ RectTransform:
   m_Children:
   - {fileID: 3765895674319019782}
   m_Father: {fileID: 3867084517649520718}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -268,7 +268,7 @@ RectTransform:
   - {fileID: 3867084518324717866}
   - {fileID: 3867084517951479318}
   m_Father: {fileID: 3867084517649520718}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -355,7 +355,7 @@ RectTransform:
   - {fileID: 3867084517713089694}
   - {fileID: 3867084518329380597}
   m_Father: {fileID: 3867084517649520718}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1181,11 +1181,11 @@ RectTransform:
   - {fileID: 3867084516870636682}
   - {fileID: 3867084516394476227}
   m_Father: {fileID: 3867084517649520718}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 8.7, y: 10.4}
+  m_AnchoredPosition: {x: 8.700012, y: 10.399979}
   m_SizeDelta: {x: 150, y: 190.85}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3867084517431041912
@@ -1255,10 +1255,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 3867084516816211529}
+  - {fileID: 3867084516606018028}
   - {fileID: 6918385329181432082}
   - {fileID: 3867084517431041914}
-  - {fileID: 3867084516606018028}
-  - {fileID: 3867084516816211529}
   - {fileID: 3867084516963165359}
   - {fileID: 3867084517207707479}
   m_Father: {fileID: 0}
@@ -2288,7 +2288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4, y: 2.7}
+  m_AnchoredPosition: {x: -4, y: 2.699997}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5171066790758721953
